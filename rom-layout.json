@@ -1,0 +1,43 @@
+{
+  "source_zip_sha256": "122f4bd79ea755ba9a72ec3fdd4b59fbd12a878624743b973eae08e8bd646198",
+  "adapted_zip_sha256": "4818bb280877dd9518052fe9449dc3672cbc173c5eb824373e4de80b18d3c1a5",
+  "changed_entries": [
+    "boot.img",
+    "dtbo.img",
+    "dynamic_partitions_op_list",
+    "unsparse_super_empty.img"
+  ],
+  "unrelated_entries_unchanged": true,
+  "super_empty_sha256": "1ba50b964ac6d8eefa5009456f358d530805658142cc921eec8bcf24c79792e3",
+  "physical_super_bytes": 10292822016,
+  "group_limit": 10288627712,
+  "aligned_feasibility_layout": [
+    {
+      "partition": "system",
+      "start": 1048576,
+      "length": 5149523968
+    },
+    {
+      "partition": "vendor",
+      "start": 5150605312,
+      "length": 862871552
+    },
+    {
+      "partition": "product",
+      "start": 6013583360,
+      "length": 2096787456
+    },
+    {
+      "partition": "odm",
+      "start": 8110735360,
+      "length": 52367360
+    },
+    {
+      "partition": "system_ext",
+      "start": 8163164160,
+      "length": 1327243264
+    }
+  ],
+  "whole_file_signature": "Removed by local repack; not an upstream signed release",
+  "allocation_check": "One-device aligned feasibility calculation, not execution of the updater"
+}

@@ -1,0 +1,6 @@
+id=phhims_r8q_trial
+name=PhhIms r8q crDroid trial
+version=0.2.3
+versionCode=7
+author=PhhIms contributors; buddi0812; Silvertax; local adaptation
+description=Experimental IMS for SM-G781B on crDroid 12.10. Optus-only availability overlay; provisioning unchanged. Emergency calling unverified.

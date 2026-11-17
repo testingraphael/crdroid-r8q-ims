@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.phh.ims.trial.carrierconfig" android:versionCode="1" android:versionName="0.2.0">
+    <application android:hasCode="false" />
+    <overlay android:targetPackage="com.android.carrierconfig" android:isStatic="true" android:priority="100" />
+</manifest>

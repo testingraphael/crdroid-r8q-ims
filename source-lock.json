@@ -1,0 +1,43 @@
+{
+  "sources": [
+    {
+      "repository": "krazey/ims",
+      "revision": "a3fec01ebc4f51c39026565c4a451fef454637fa",
+      "destination": "."
+    },
+    {
+      "repository": "amikhasenko/rnnoise",
+      "revision": "f94e734aa504e34100516c7d486cf69fc4174f00",
+      "destination": "app/jni/rnnoise"
+    },
+    {
+      "repository": "ewan-xu/AEC3",
+      "revision": "6b11f0f31cd10f6bf68025ccad771f545d87dbce",
+      "destination": "app/jni/webrtc-aec3"
+    },
+    {
+      "repository": "abseil/abseil-cpp",
+      "revision": "852fc61f31b3d68df58ba6a167dff73fee04558f",
+      "destination": "app/jni/webrtc-aec3/base/abseil"
+    }
+  ],
+  "packaging_revision": "c94355194a1453ba4a69007aac352d1d0656bda3",
+  "rom_sha256": "122f4bd79ea755ba9a72ec3fdd4b59fbd12a878624743b973eae08e8bd646198",
+  "rom_incremental": "1779797346",
+  "target_sdk": 36,
+  "target_bootloader": "G781BXXSIHYJ1",
+  "packaging_files": {
+    "LICENSE": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+    "module/ovl/system/etc/default-permissions/default-permissions-phhims.xml": "312e0a8d841e4da8e09b8badc34fd55d94c96e6e6953478a357502e182b58618",
+    "module/ovl/system/etc/permissions/android.hardware.telephony.ims.xml": "70da58a532723480a6a0a0de87f0e51c48de9bb6705b60681f69b493cf75822f",
+    "module/ovl/system/etc/permissions/privapp-permissions-phhims.xml": "3f713b3de3c908cb541a0522aec2849a8786ff9dd0b01c38756206b17ca0079d",
+    "module/ovl/system/etc/sysconfig/hiddenapi-phhims.xml": "9cdb9ce8fd0395e2fbe50aeb7d7fab5a2c8e1df6c142147e761f9d867c301c24"
+  },
+  "patch_sha256": {
+    "patches/0001-phhims-for-r8q-pixelos.patch": "c0c045703ce6c8f5e35de18931e4a3a6439339256212fd8981dcdcc4dec08c24",
+    "patches/0002-drop-protected-broadcast.patch": "32662f2a27cd61337f89591891be372cdf1a50dced254f302eb3f734a7e98b30",
+    "patches/0003-report-no-media-outgoing-end.patch": "ecc4fa9334f26b140c341b3390a08cbf10f12a95201a935103af8463999ebebc",
+    "patches/0004-preserve-carrier-policy.patch": "56f90c2e347cd2c08a1cb6b47decb2c91f3e4c509515ff016bb2209bf014e3a0",
+    "patches/0005-local-android-sdk-and-arm64-build.patch": "bfcb62db8b99d398b822d0fa55db91b17c216dff4b2154b770da62c39b18d2ef"
+  }
+}

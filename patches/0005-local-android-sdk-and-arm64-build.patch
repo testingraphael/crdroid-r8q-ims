@@ -1,0 +1,18 @@
+--- a/app/build.gradle
++++ b/app/build.gradle
+@@ -15,6 +15,7 @@
+         targetSdk 33
+         versionCode 33
+         versionName "1.0"
++        ndk { abiFilters "arm64-v8a" }
+ 
+         }
+     sourceSets {
+@@ -67,6 +68,6 @@
+ // Use the project's full platform stub jar for Java compilation too (SDK stubs hide MmTelFeature internals).
+ afterEvaluate {
+     tasks.withType(JavaCompile).configureEach {
+-        options.bootstrapClasspath = files("${projectDir}/libs/android.jar", "/path/to/android-sdk/platforms/android-33/android.jar")
++        options.bootstrapClasspath = files("${projectDir}/libs/android.jar", "${System.getenv('ANDROID_HOME')}/platforms/android-33/android.jar")
+     }
+ }
