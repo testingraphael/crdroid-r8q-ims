@@ -1,0 +1,18 @@
+{
+  "apk_sha256": "2e14a9f2b0a2ece399e45cb3acd5819f8f7a50f13cf18659b485155ebdd2a969",
+  "apk_signer_sha256": "231e43393a5be700134c9555d29d0dcdd0bc0daec3e767742a3cf69e3c89f6c4",
+  "source_tree_sha256": "4bdad7bd923ba0291c2887bd57785e11cf3c93bd66407e9de8d684f75b1387bd",
+  "source_tree_hash_method": "Sorted relative path, NUL, binary SHA-256 per file; excludes Gradle outputs, .git and local.properties",
+  "source_lock_sha256": "1f2cf9e53ace0436b597e9c5f3dfdd89a613991f7e6f0367399113e1ac15bfc1",
+  "java": "openjdk version \"17.0.21.0.3\" 2026-10-24",
+  "gradle": "8.5",
+  "agp": "8.2.0",
+  "kotlin": "1.8.10",
+  "sdk_platform": 33,
+  "build_tools": "35.0.0",
+  "ndk": "25.1.8937393",
+  "cmake": "3.22.1",
+  "abi": "arm64-v8a",
+  "build_result": "assembleRelease passed; zipalign and APK signature verification passed",
+  "provenance_limit": "Local build record, not an independent signed attestation of source provenance"
+}

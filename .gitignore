@@ -1,0 +1,11 @@
+/artifacts/
+/toolchains/
+/private-evidence/
+__pycache__/
+*.pyc
+*.jks
+*.keystore
+.DS_Store
+/*.img
+/*.zip
+/*.tar.gz

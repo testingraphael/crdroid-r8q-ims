@@ -1,0 +1,45 @@
+{
+  "release": "android16-ims-v0.2.3",
+  "device": "SM-G781B/r8q",
+  "rom": "crDroid 12.10 Android 16",
+  "incremental": "1779797346",
+  "bootloader": "G781BXXSIHYJ1",
+  "module": "0.2.3",
+  "assets": [
+    {
+      "file": "boot-r8q-unpatched.img",
+      "bytes": 67108864,
+      "sha256": "ec3bf9b8f9b21d226a27ff618ab7967d52db02dad35ea37d3cc27a865ff54594"
+    },
+    {
+      "file": "crDroidAndroid-16.0-20260526-r8q-v12.10-g781b-fit.zip",
+      "bytes": 1730414262,
+      "sha256": "4818bb280877dd9518052fe9449dc3672cbc173c5eb824373e4de80b18d3c1a5"
+    },
+    {
+      "file": "phhims-r8q-source-0.2.3.tar.gz",
+      "bytes": 20134878,
+      "sha256": "63e0d753bd9dcc05a0213773c55be75200ccf8347a24dc93a0b87095c361f0c4"
+    },
+    {
+      "file": "phhims-r8q-trial-0.2.3.zip",
+      "bytes": 2089291,
+      "sha256": "4907eaa02fb6d04467e8626580e87d090c6b0c60705d1a012bacceca82a8a4a7"
+    },
+    {
+      "file": "r8q-read-super-v2.zip",
+      "bytes": 1063,
+      "sha256": "843261a157e60159f13bf6c7d54ea62dcda2a2d56e9d6f56459cb77e09626c49"
+    },
+    {
+      "file": "recovery-r8q-g781b.img",
+      "bytes": 82694144,
+      "sha256": "25cb094094757b101d80f6987e41bd15d3f6bb4d767845ed6076537fea798899"
+    },
+    {
+      "file": "vbmeta-r8q.img",
+      "bytes": 8192,
+      "sha256": "c3f8d41bf012caaeafaaa5f3a3026db8adfba815c8ff9af807ae1e2cf4f0e8d3"
+    }
+  ]
+}
