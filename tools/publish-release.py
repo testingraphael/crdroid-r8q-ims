@@ -39,7 +39,10 @@ def main():
     manifest = json.loads((ROOT / "release-manifest.json").read_text())
     tag = manifest["release"]
     require(api(f"git/ref/tags/{tag}")["object"]["sha"] == sha, "Release tag must point to merged HEAD")
-    release = api(f"releases/tags/{tag}")
+    release_id = run("gh", "release", "view", tag, "--repo", REPO,
+                     "--json", "databaseId", "--jq", ".databaseId")
+    release = api(f"releases/{release_id}")
+    require(release["tag_name"] == tag, "Draft release tag differs from the manifest")
     require(release["draft"], "Release must still be a draft")
     expected = {a["file"]: a for a in manifest["assets"]}
     names = set(expected) | {"SHA256SUMS", "release-manifest.json"}
