@@ -3,6 +3,7 @@
 """Publish a verified draft from a clean, merged main checkout using gh."""
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -26,6 +27,19 @@ def require(condition, message):
         raise SystemExit(message)
 
 
+def check_draft(release, tag, expected):
+    require(release["tag_name"] == tag, "Draft release tag differs from the manifest")
+    require(release["draft"], "Release must still be a draft")
+    assets = release["assets"]
+    require(len(assets) == len(expected) and {a["name"] for a in assets} == set(expected), "Unexpected release assets")
+    for asset in assets:
+        require(asset["state"] == "uploaded", f"Incomplete upload: {asset['name']}")
+        record = expected[asset["name"]]
+        require(asset["size"] == record["bytes"], f"Wrong asset size: {asset['name']}")
+        require(asset.get("digest") == f"sha256:{record['sha256']}", f"Wrong server digest: {asset['name']}")
+    return {a["name"]: a["id"] for a in assets}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--publish", action="store_true", help="Publish after every check passes")
@@ -35,32 +49,30 @@ def main():
     sha = run("git", "rev-parse", "HEAD")
     require(api("git/ref/heads/main")["object"]["sha"] == sha, "Local main differs from GitHub main")
     pulls = api(f"commits/{sha}/pulls")
-    require(any(p["merged_at"] and p["merge_commit_sha"] == sha for p in pulls), "HEAD must be a merged pull request")
+    require(any(p["merged_at"] and p["merge_commit_sha"] == sha and p["base"]["ref"] == "main"
+                and p["base"]["repo"]["full_name"] == REPO for p in pulls),
+            "HEAD must be a pull request merged into this repository's main branch")
     manifest = json.loads((ROOT / "release-manifest.json").read_text())
     tag = manifest["release"]
     require(api(f"git/ref/tags/{tag}")["object"]["sha"] == sha, "Release tag must point to merged HEAD")
     release_id = run("gh", "release", "view", tag, "--repo", REPO,
                      "--json", "databaseId", "--jq", ".databaseId")
-    release = api(f"releases/{release_id}")
-    require(release["tag_name"] == tag, "Draft release tag differs from the manifest")
-    require(release["draft"], "Release must still be a draft")
     expected = {a["file"]: a for a in manifest["assets"]}
-    names = set(expected) | {"SHA256SUMS", "release-manifest.json"}
-    assets = release["assets"]
-    require(len(assets) == len(names) and {a["name"] for a in assets} == names, "Unexpected release assets")
-    for asset in assets:
-        require(asset["state"] == "uploaded", f"Incomplete upload: {asset['name']}")
-        if asset["name"] in expected:
-            record = expected[asset["name"]]
-            require(asset["size"] == record["bytes"], f"Wrong asset size: {asset['name']}")
-            require(asset.get("digest") == f"sha256:{record['sha256']}", f"Wrong server digest: {asset['name']}")
+    for name in ("SHA256SUMS", "release-manifest.json"):
+        content = (ROOT / name).read_bytes()
+        expected[name] = {"bytes": len(content), "sha256": hashlib.sha256(content).hexdigest()}
+    asset_ids = check_draft(api(f"releases/{release_id}"), tag, expected)
     with tempfile.TemporaryDirectory(prefix="r8q-release-") as tmp:
         subprocess.run(["gh", "release", "download", tag, "--repo", REPO, "--dir", tmp], cwd=ROOT, check=True)
         subprocess.run([sys.executable, str(ROOT / "tools/verify-release.py"), tmp], cwd=ROOT, check=True)
     if args.publish:
-        # Recheck the source branch after downloading before changing the release.
+        # Recheck remote state after downloading and address the draft by its ID.
         require(api("git/ref/heads/main")["object"]["sha"] == sha, "GitHub main changed during verification")
-        subprocess.run(["gh", "release", "edit", tag, "--repo", REPO, "--draft=false", "--latest"], cwd=ROOT, check=True)
+        require(api(f"git/ref/tags/{tag}")["object"]["sha"] == sha, "Release tag changed during verification")
+        require(check_draft(api(f"releases/{release_id}"), tag, expected) == asset_ids,
+                "Draft assets changed during verification")
+        subprocess.run(["gh", "api", "--method", "PATCH", f"repos/{REPO}/releases/{release_id}",
+                        "-F", "draft=false", "-f", "make_latest=true", "--silent"], cwd=ROOT, check=True)
         print(f"Published https://github.com/{REPO}/releases/tag/{tag}")
     else:
         print("All checks passed. Release remains a draft. Use --publish to publish it.")
